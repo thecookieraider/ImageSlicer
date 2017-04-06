@@ -6,7 +6,7 @@ import SanityChecks
 def handleppm(filename="__slicedimage__", path="", save_dir="", left_right=False):
     """
     A handler that takes care of slicing a set of ppm images.
-    Note that this function does NOT perform the actual slicing, but simply takes user input, validates it, and calls
+    Note that this function does NOT perform the actual slicing, but simply performs extra commandline arg validation and calls
     the proper functions to accomplish the slicing, all while providing user feedback on operation status
     :param left_right: A boolean value that will be passed to the actual slicing functions
     :param path: Path from which to retrieve the image files.
@@ -75,7 +75,7 @@ def handleppm(filename="__slicedimage__", path="", save_dir="", left_right=False
 def handlegeneric(filename="__slicedimage__", path="", save_dir="", ftype="", left_right=False):
     """
     A handler that takes care of slicing a set of jpg/jpeg images.
-    Note that this function does NOT perform the actual slicing, but simply takes user input, validates it, and calls
+    Note that this function does NOT perform the actual slicing, but simply performs extra commandline arg validation and calls
     the proper functions to accomplish the slicing, all while providing user feedback on operation status
     :param left_right: A boolean value that will be passed to the actual slicing functions
     :param path: Path from which to retrieve the image files.
