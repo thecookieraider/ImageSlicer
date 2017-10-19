@@ -74,7 +74,7 @@ def handleppm(filename="__slicedimage__", path="", save_dir="", left_right=False
 
 def handlegeneric(filename="__slicedimage__", path="", save_dir="", ftype="", left_right=False):
     """
-    A handler that takes care of slicing a set of jpg/jpeg images.
+    A handler that takes care of slicing a set of any non-ppm images.
     Note that this function does NOT perform the actual slicing, but simply performs extra commandline arg validation and calls
     the proper functions to accomplish the slicing, all while providing user feedback on operation status
     :param left_right: A boolean value that will be passed to the actual slicing functions
@@ -97,10 +97,10 @@ def handlegeneric(filename="__slicedimage__", path="", save_dir="", ftype="", le
     # Ensure that the extension is a valid jpe extension
 
     while True:
-        # Get the path where the jpgs are
+        # Get the path where the images are
 
-        # Retrieve the jpg files from the directory (path checking is cooked into the function itself)
-        images = ImageUtils.retrieve_valid_files(path, False, '.jpg', '.jpeg')
+        # Retrieve the image files from the directory (path checking is cooked into the function itself)
+        images = ImageUtils.retrieve_valid_files(path, False, ftype)
         if images is None:
             print()
             print('Invalid directory: {}'.format(path))
@@ -114,7 +114,7 @@ def handlegeneric(filename="__slicedimage__", path="", save_dir="", ftype="", le
             continue
         # Check if all the images are the same size
         print('Making sure that all images are equal in size . . .')
-        if SanityChecks.check_image_size_consistency_jpg(images, verbose=True):
+        if SanityChecks.check_image_size_consistency_genericf(images, verbose=True):
             # Slice the images and save the new one
             print('Slicing the images now . . .')
             img = ImageUtils.create_blend_generic(images, left_right)

@@ -99,41 +99,41 @@ def check_image_size_consistency_ppm_required_size(images, required_size, verbos
     return is_ok
 
 
-def check_image_size_consistency_jpg(images, verbose=False, fullpath=False):
+def check_image_size_consistency_generic(images, verbose=False, fullpath=False):
     """
-    Checks if all jpg files contianed within 'images' are all equal in size
+    Checks if all img files contianed within 'images' are all equal in size
     :param images: Return value from retrieve_valid_files
     :param verbose: Whether or not to print out errors in sizes as we find them
     :param fullpath: Whether or not to print out full path or just file name in our verbosity
     :return:
     """
     is_ok = True
-    # The jpg files in the images collection are just paths. We can't ascertain their sizes without some help from PIL
-    jpgs = {}
+    # The img files in the images collection are just paths. We can't ascertain their sizes without some help from PIL
+    generic = {}
     for img in images:
-        jpgs[img] = Image.open(img)
+        generic[img] = Image.open(img)
     # The keys will be the paths, will the values will be the images themselves (a PIL class)
-    keys = jpgs.keys()
+    keys = generic.keys()
     for i in keys:
-        jpgi = jpgs[i]
-        size = jpgi.size
+        imgi = generic[i]
+        size = imgi.size
         for j in keys:
-            jpgj = jpgs[j]
-            if jpgs[j].size[0] != size[0] or jpgs[j].size[1] != size[1]:
+            imgj = generic[j]
+            if generic[j].size[0] != size[0] or generic[j].size[1] != size[1]:
                 is_ok = False
                 if verbose:
                     if not fullpath:
                         print('{} does not match {} in size ({} vs {})'
-                              .format(i.split('\\').pop(), j.split('\\').pop(), (jpgj.width, jpgj.height), size))
+                              .format(i.split('\\').pop(), j.split('\\').pop(), (imgj.width, imgj.height), size))
                     else:
                         print('{} does not match {} in size ({} vs {})'
-                              .format(i, j, (jpgj.width, jpgj.height), size))
+                              .format(i, j, (imgj.width, imgj.height), size))
     return is_ok
 
 
-def check_image_size_consistency_jpg_required_size(images, required_size, verbose=False, fullpath=False):
+def check_image_size_consistency_generic_required_size(images, required_size, verbose=False, fullpath=False):
     """
-    Checks to see if all jpg files in 'images' are equal to the specified required size
+    Checks to see if all img files in 'images' are equal to the specified required size
     :param images: Collection of paths returned by retrieve_valid_files
     :param required_size: The total size in pixels that the images must be equal to
     :param verbose: Whether or not to print out errors in sizes as we find them
@@ -141,22 +141,22 @@ def check_image_size_consistency_jpg_required_size(images, required_size, verbos
     :return:
     """
     is_ok = True
-    jpgs = {}
-    # The jpg files in the images collection are just paths. We can't ascertain their sizes without some help from PIL
+    generic = {}
+    # The img files in the images collection are just paths. We can't ascertain their sizes without some help from PIL
     for img in images:
-        jpgs[img] = Image.open(img)
+        generic[img] = Image.open(img)
     # The keys will be the paths, will the values will be the images themselves (a PIL class)
-    for i in jpgs.keys():
-        jpg = jpgs[i]
-        if jpg.width * jpg.height != required_size:
+    for i in generic.keys():
+        img = generic[i]
+        if img.width * img.height != required_size:
             is_ok = False
             if verbose:
                 if not fullpath:
                     print('{} does not have the require size of {} (has size of {})'
-                          .format(i.split('\\').pop(), required_size, jpg.width * jpg.height))
+                          .format(i.split('\\').pop(), required_size, img.width * img.height))
                 else:
                     print('{} does not have the require size of {} (has size of {})'
-                          .format(i, required_size, jpg.width * jpg.height))
+                          .format(i, required_size, img.width * img.height))
     return is_ok
 
 
